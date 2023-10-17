@@ -17,7 +17,7 @@
                         <input type="submit" class="bg-indigo-50 border-red-300"/>
                     </form>
                     @isset($search)
-                        <p style="font-style: italic">Resultat   pour '{{ $search }}'</p>
+                        <p style="font-style: italic">Resultat pour '{{ $search }}'</p>
                     @endisset
                     <h3 class="font-semibold">Titres</h3>
                     <ol>
