@@ -10,21 +10,26 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class="text-center font-semibold">Liste des films des Yvernaux</h1>
-                    <form method="post" action="/films">
+                    <a class="text-right block" href="{{ route('film.add') }}">add</a>
+                    <form method="post" action="{{ route('film.search') }}">
                         @csrf
                         <label for="search">Rechercher :</label>
-                        <input type="text" name="search"/>
+                        <input type="text" name="search" value="{{ !empty($search) ? $search : '' }}"/>
                         <input type="submit" class="bg-indigo-50 border-red-300"/>
-                        <a href="{{ route('film.add') }}">add</a>
                     </form>
-                    @isset($search)
+                    
+                    @if(isset($search))
                         <p style="font-style: italic">Resultat pour '{{ $search }}'</p>
-                    @endisset
+                    @else
+                        <a class="text-center block" href="?tri=true"> Trier par ordre Alphabetique</a>
+                    @endif
                     <h3 class="font-semibold">Titres</h3>
                     <ol>
                         @forelse ($movies as $movie)
                             @if ($movie->titre != '')
-                        <li><a href="{{ route('film.info', ['idFilm' => $movie->id]) }}">{{ $movie->titre }}</a></li>
+                                <li>
+                                    <a href="{{ route('film.info', ['idFilm' => $movie->id]) }}">{{ $movie->titre }}</a>
+                                </li>
                             @endif
                         @empty
                             <h2 class="font-semibold text-center"> Pas de résultat pour {{ $search }}</h2>

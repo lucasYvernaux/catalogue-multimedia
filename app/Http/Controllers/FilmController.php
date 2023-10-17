@@ -7,21 +7,21 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Exception;
-use function Psy\debug;
 
 class FilmController extends Controller
 {
     /**
      * Display the list of movies.
      */
-    public function show(): View
+    public function show(Request $request): View
     {
         $films = Film::paginate(25);
+        if($request->tri)
+            $films = Film::query()->orderBy('titre')->paginate(25);
         return view('film.list', ['movies' => $films]);
     }
 
@@ -31,13 +31,13 @@ class FilmController extends Controller
     public function search(Request $request): View
     {
         $search = $request->input('search');
-        $query = Film::query();
         if ($search) {
-            $query->where('titre', 'LIKE', '%' . $search . '%');
+            $films = Film::query()->where('titre', 'LIKE', '%' . $search . '%')->orderBy('titre')->paginate(15);
         }
-        $films = $query->paginate(15);
         return view('film.list', ['movies' => $films, 'search' => $search]);
     }
+
+
 
     /**
      * Add movies.

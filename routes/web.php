@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/films', [FilmController::class, 'show'])->middleware(['auth', 'verified'])->name('films');
-Route::post('/films', [FilmController::class, 'search'])->middleware(['auth', 'verified'])->name('search-films');
+Route::post('/films/search', [FilmController::class, 'search'])->middleware(['auth', 'verified'])->name('film.search');
 
 
 Route::get('/films/add', function () {
