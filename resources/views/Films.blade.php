@@ -21,11 +21,13 @@
                     @endisset
                     <h3 class="font-semibold">Titres</h3>
                     <ol>
-                        @foreach ($movies as $movie)
+                        @forelse ($movies as $movie)
                             @if ($movie->titre != '')
                                 <li>{{ $movie->titre }}</li>
                             @endif
-                        @endforeach
+                        @empty
+                            <h2 class="font-semibold text-center"> Pas de résultat pour {{ $search }}</h2>
+                        @endforelse
                     </ol>
                     {{ $movies->links() }}
                 </div>
