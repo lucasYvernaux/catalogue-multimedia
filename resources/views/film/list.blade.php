@@ -15,6 +15,7 @@
                         <label for="search">Rechercher :</label>
                         <input type="text" name="search"/>
                         <input type="submit" class="bg-indigo-50 border-red-300"/>
+                        <a href="{{ route('film.add') }}">add</a>
                     </form>
                     @isset($search)
                         <p style="font-style: italic">Resultat pour '{{ $search }}'</p>
@@ -23,7 +24,7 @@
                     <ol>
                         @forelse ($movies as $movie)
                             @if ($movie->titre != '')
-                                <li>{{ $movie->titre }}</li>
+                        <li><a href="{{ route('film.info', ['idFilm' => $movie->id]) }}">{{ $movie->titre }}</a></li>
                             @endif
                         @empty
                             <h2 class="font-semibold text-center"> Pas de résultat pour {{ $search }}</h2>

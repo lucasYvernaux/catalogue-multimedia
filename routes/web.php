@@ -33,4 +33,15 @@ Route::middleware('auth')->group(function () {
 Route::get('/films', [FilmController::class, 'show'])->middleware(['auth', 'verified'])->name('films');
 Route::post('/films', [FilmController::class, 'search'])->middleware(['auth', 'verified'])->name('search-films');
 
+
+Route::get('/films/add', function () {
+    return view('film.add');
+})->middleware(['auth', 'verified'])->name('film.add');
+Route::post('/films/add', [FilmController::class, 'addMovie'])->middleware(['auth', 'verified'])->name('film.add');
+
+Route::get('/films/{idFilm}', [FilmController::class, 'showMovie'])->middleware(['auth', 'verified'])->name('film.info');
+
+Route::get('/films/edit/{idFilm}', [FilmController::class, 'showEditMovie'])->middleware(['auth', 'verified'])->name('film.edit');
+Route::post('/films/edit/{idFilm}', [FilmController::class, 'editMovie'])->middleware(['auth', 'verified'])->name('film.edit');
+
 require __DIR__.'/auth.php';

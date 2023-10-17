@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('duree')->nullable();
             $table->string('genres');
             $table->enum('rangement',['Tour', 'Album', 'Disque-dur', 'Etuit', '']);
-            $table->string('nbreCD')->nullable();
+            $table->integer('nbreCD')->nullable();
             $table->enum('fonctionne', ['oui', 'non', 'Non-Testé', ''])->nullable();
             $table->string('titre_alternatif')->nullable();
             $table->string('remarques')->nullable();
