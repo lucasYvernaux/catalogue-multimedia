@@ -45,7 +45,7 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'url' => 'https://www.phpmyadmin.co/server_databases.php',
+            'url' => 'https://www.db4free.net/phpMyAdmin/index.php',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'forge'),
