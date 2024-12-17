@@ -40,6 +40,7 @@ Route::get('/films/add', function () {
 Route::post('/films/add', [FilmController::class, 'addMovie'])->middleware(['auth', 'verified'])->name('film.add');
 
 Route::get('/films/{idFilm}', [FilmController::class, 'showMovie'])->middleware(['auth', 'verified'])->name('film.info');
+Route::get('/api', [FilmController::class, 'callApi']);
 
 Route::get('/films/edit/{idFilm}', [FilmController::class, 'showEditMovie'])->middleware(['auth', 'verified'])->name('film.edit');
 Route::post('/films/edit/{idFilm}', [FilmController::class, 'editMovie'])->middleware(['auth', 'verified'])->name('film.edit');

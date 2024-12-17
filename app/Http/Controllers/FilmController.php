@@ -14,6 +14,29 @@ use Exception;
 
 class FilmController extends Controller
 {
+    
+    /**
+     * Test call api movies.
+     */
+    public function callApi(): View
+    {
+        //$result[] = array();
+        $client = new \GuzzleHttp\Client(['verify' => public_path('certificat/cacert.pem')]);
+        
+        $reponse = $client->get('https://api.themoviedb.org/3/movie/tt6334354?language=fr-FR', [
+            'headers' => [
+              'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MTFlZmYwMTA1M2ZmNjhiYWMzNzBiN2JlMGI0NjgxNSIsInN1YiI6IjY1MmQ0ZmI5ZWE4NGM3MDBjYTExZGEwYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1gSXkgwZ_EibUo9QDOJYvppsKAu3lWz9mQ9SstVndro',
+              'accept' => 'application/json',
+            ],
+          ]);
+            
+          $resultTmp = json_decode($reponse->getBody()->getContents());
+          //array_unshift($result, $resultTmp);
+          
+
+        return view('film.api', ['result' => ($resultTmp)]);
+    }
+
     /**
      * Display the list of movies.
      */
@@ -72,7 +95,19 @@ class FilmController extends Controller
     public function showMovie($id): View
     {
         $film = Film::findOrFail($id);
-        return view('film.info', ['movie' => $film]);
+
+        $client = new \GuzzleHttp\Client(['verify' => public_path('certificat/cacert.pem')]);
+        
+        $reponse = $client->get('https://api.themoviedb.org/3/search/movie/?query='.trim($film->titre), [
+            'headers' => [
+              'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MTFlZmYwMTA1M2ZmNjhiYWMzNzBiN2JlMGI0NjgxNSIsInN1YiI6IjY1MmQ0ZmI5ZWE4NGM3MDBjYTExZGEwYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1gSXkgwZ_EibUo9QDOJYvppsKAu3lWz9mQ9SstVndro',
+              'accept' => 'application/json',
+            ],
+          ]);
+            
+          $result = json_decode($reponse->getBody()->getContents());
+          
+        return view('film.info', ['movie' => $film, 'result' => $result]);
     }
 
     /**

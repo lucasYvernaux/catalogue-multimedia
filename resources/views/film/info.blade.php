@@ -13,6 +13,7 @@
                     <a class="text-right w-full block" href="{{ route('film.edit', ['idFilm' => $movie->id]) }}">Edit</a>
                     <h1 class="text-center font-semibold">Film {{ $movie->titre }}</h1>
                     <section>
+                        <h1>Info Excel</h1>
                         <div>
                             <span class="font-semibold">Type : </span>
                             <span>{{ $movie->type }}</span>
@@ -48,6 +49,44 @@
                         <div>
                             <span class="font-semibold">Remarques : </span>
                             <span>{{ $movie->remarques }}</span>
+                        </div>
+                    </section>
+                    <section>
+                        <h1>Info APi</h1>
+                        <div>
+                            <p>title   : {{ $result->title   }}</p>
+                        </div>
+                        <div>
+                            <p>original_title  : {{ $result->original_title  }}</p>
+                        </div>
+                        <div>
+                            <p>overview  : {{ $result->overview  }}</p>
+                        </div>
+                        <div>
+                            <p>original_language  : {{ $result->original_language  }}</p>
+                        </div>
+                        <div>
+                            <p>genres :
+                                <ul>
+                                    @foreach ($result->genres  as $item)
+                                        @foreach ($item as $singleItem)
+                                            <li>{{ gettype($singleItem) == 'string' ? $singleItem : '' }}
+                                        @endforeach
+                                    @endforeach
+                                </ul>
+                            </p>
+                        </div>
+                        <div>
+                            <p>runtime  : {{ $result->runtime  }}</p>
+                        </div>
+                        <div>
+                            <p>budget  : {{ $result->budget  }}</p>
+                        </div>
+                        <div>
+                            <p>release_date  : {{ $result->release_date  }}</p>
+                        </div>
+                        <div>
+                            <p>popularity  : {{ $result->popularity  }}</p>
                         </div>
                     </section>
                 </div>

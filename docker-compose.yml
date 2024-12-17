@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  main:
+    container_name: ContainerCatalogueYnh
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - ./script-setup.sh:/script-setup.sh
+    entrypoint: sh -c "sh /script-setup.sh"
+    ports:
+      - 8080:8000
+    depends_on:
+      - db
+    networks:
+      - laravel-exa
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    container_name: DatabaseCatalogue
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_ROOT: "root"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - db:/var/lib/mysql
+    ports:
+      - 33061:3306
+    networks:
+      - laravel-exa
+
+networks:
+  laravel-exa:
+    driver: bridge
+
+volumes:
+  db:
+    driver: local
