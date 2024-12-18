@@ -9,7 +9,7 @@ php artisan cache:clear
 echo -e "**************************************************"
 echo -e "**********  php artisan key:generate **************"
 php artisan key:generate --force
-eco -e "****************************************************"
+echo -e "****************************************************"
 echo -e "********    php artisan clear-compiled    ********"
 php artisan clear-compiled
 echo -e "***************************************************"

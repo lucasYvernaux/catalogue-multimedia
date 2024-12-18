@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-guest-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ !empty($search) ? __('Result Search') : __('Films') }}
@@ -14,15 +14,17 @@
                     <form method="post" action="{{ route('film.search') }}">
                         @csrf
                         <label for="search">Rechercher :</label>
-                        <input type="text" name="search" value="{{ !empty($search) ? $search : '' }}"/>
-                        <input type="submit" class="bg-indigo-50 border-red-300"/>
+                        <input type="text" name="search" value="{{ !empty($search) ? $search : '' }}" />
+                        <input type="submit" class="bg-indigo-50 border-red-300" />
                     </form>
-                    
-                    @if(isset($search))
+
+                    @if (isset($search) && !$movies->isEmpty())
                         <p style="font-style: italic">Resultat pour '{{ $search }}'</p>
                     @else
                         <a class="text-center block" href="?tri=true"> Trier par ordre Alphabetique</a>
                     @endif
+
+
                     <h3 class="font-semibold">Titres</h3>
                     <ol>
                         @forelse ($movies as $movie)
@@ -40,4 +42,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-guest-layout>
