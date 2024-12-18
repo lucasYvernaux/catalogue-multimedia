@@ -96,18 +96,52 @@ class FilmController extends Controller
     {
         $film = Film::findOrFail($id);
 
-        /*$client = new \GuzzleHttp\Client(['verify' => public_path('certificat/cacert.pem')]);
-        
-        $reponse = $client->get('https://api.themoviedb.org/3/search/movie/?query='.trim($film->titre), [
+        $client = new \GuzzleHttp\Client(['verify' => public_path('certificat/cacert.pem')]);
+        $movie='';
+
+        /*$requestSession = $client->get('https://api.themoviedb.org/3/authentication/',[
             'headers' => [
-              'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MTFlZmYwMTA1M2ZmNjhiYWMzNzBiN2JlMGI0NjgxNSIsInN1YiI6IjY1MmQ0ZmI5ZWE4NGM3MDBjYTExZGEwYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1gSXkgwZ_EibUo9QDOJYvppsKAu3lWz9mQ9SstVndro',
-              'accept' => 'application/json',
+                'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MTFlZmYwMTA1M2ZmNjhiYWMzNzBiN2JlMGI0NjgxNSIsIm5iZiI6MTY5NzQ2ODM0NS44NjYsInN1YiI6IjY1MmQ0ZmI5ZWE4NGM3MDBjYTExZGEwYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.NBiHpElKMQvLYT6vyQry0GW1yJ04jicqN2vWv1gyFbI',
+                'accept' => 'application/json',
             ],
+        ]);
+
+        $sessionLucas = json_decode($requestSession->getBody()->getContents());
+    
+        dd($sessionLucas);*/
+        
+        $reponse = $client->get('https://api.themoviedb.org/3/search/movie?query='.trim($film->titre).'&language=fr-FR', [
+            'headers' =>  [
+                'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MTFlZmYwMTA1M2ZmNjhiYWMzNzBiN2JlMGI0NjgxNSIsIm5iZiI6MTY5NzQ2ODM0NS44NjYsInN1YiI6IjY1MmQ0ZmI5ZWE4NGM3MDBjYTExZGEwYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.NBiHpElKMQvLYT6vyQry0GW1yJ04jicqN2vWv1gyFbI',
+                'accept' => 'application/json',
+             
+              ],
           ]);
             
-          $result = json_decode($reponse->getBody()->getContents());*/
+          $result = json_decode($reponse->getBody()->getContents());
+
+          if($result->total_results == 1){
+            $reponseMovie = $client->get('https://api.themoviedb.org/3/movie/'.$result->results[0]->id.'?&language=fr-FR', [
+                'headers' =>  [
+                    'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MTFlZmYwMTA1M2ZmNjhiYWMzNzBiN2JlMGI0NjgxNSIsIm5iZiI6MTY5NzQ2ODM0NS44NjYsInN1YiI6IjY1MmQ0ZmI5ZWE4NGM3MDBjYTExZGEwYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.NBiHpElKMQvLYT6vyQry0GW1yJ04jicqN2vWv1gyFbI',
+                    'accept' => 'application/json',
+                 
+                  ],
+              ]);
+
+              $movie = json_decode($reponseMovie->getBody()->getContents());
+
+              $movie->original_language = locale_get_display_language($movie->original_language);
+
+              for($i=0; $i < sizeof($movie->origin_country) ;$i++) {
+                $code = strlen($movie->origin_country[$i]) == 2 ? "-".$movie->origin_country[$i] : $movie->origin_country[$i];
+                $movie->origin_country[$i] = locale_get_display_region($code);
+              }
+          }
+
+          //dd($result->results);
           
-        return view('film.info', ['movie' => $film]);
+        return view('film.info', ['movie' => $film, "result" => $movie, 'result_size' => $result->total_results]);
     }
 
     /**
