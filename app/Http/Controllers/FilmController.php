@@ -96,7 +96,7 @@ class FilmController extends Controller
     {
         $film = Film::findOrFail($id);
 
-        $client = new \GuzzleHttp\Client(['verify' => public_path('certificat/cacert.pem')]);
+        /*$client = new \GuzzleHttp\Client(['verify' => public_path('certificat/cacert.pem')]);
         
         $reponse = $client->get('https://api.themoviedb.org/3/search/movie/?query='.trim($film->titre), [
             'headers' => [
@@ -105,9 +105,9 @@ class FilmController extends Controller
             ],
           ]);
             
-          $result = json_decode($reponse->getBody()->getContents());
+          $result = json_decode($reponse->getBody()->getContents());*/
           
-        return view('film.info', ['movie' => $film, 'result' => $result]);
+        return view('film.info', ['movie' => $film]);
     }
 
     /**
