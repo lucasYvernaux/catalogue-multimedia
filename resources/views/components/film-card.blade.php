@@ -7,9 +7,13 @@
         <div class="card-body">
             <h5 class="card-title">
                 @isset($filmApi->title)
-                    {{ $index + 1 }}. {{ $filmApi->title }}
+                    @isset($index)
+                        {{ $index + 1 }}. {{ $filmApi->title }}
+                    @else
+                        {{ $filmApi->title }}
+                    @endisset
                 @else
-                    Titre pas trouvé
+                    Titre non Trouvé
                 @endisset
             </h5>
             <p class="card-text">
@@ -46,7 +50,7 @@
                 @isset($filmApi->release_date)
                     <li class="list-group-item">
                         <span class="font-semibold">Date de sortie :</span>
-                        {{ $filmApi->release_date }}
+                        {{ $releaseDate }}
                         (Il y a {{ $temps }})
                     </li>
                 @endisset

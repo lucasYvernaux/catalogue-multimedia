@@ -57,7 +57,7 @@
                                         <span>{{ $movie->remarques }}</span>
                                     </div>
                                 </section>
-                                <hr class="my-2 border border-success w-full" />
+                                <hr class="my-2 border w-full" />
                                 @isset($result)
                                     @if ($result_size == 1)
                                         <h1 class="text-xl">Info API</h1>
