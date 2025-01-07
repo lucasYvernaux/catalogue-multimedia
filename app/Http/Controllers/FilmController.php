@@ -128,20 +128,11 @@ class FilmController extends Controller
                  
                   ],
               ]);
-
               $movie = json_decode($reponseMovie->getBody()->getContents());
-
-              $movie->original_language = locale_get_display_language($movie->original_language);
-
-              for($i=0; $i < sizeof($movie->origin_country) ;$i++) {
-                $code = strlen($movie->origin_country[$i]) == 2 ? "-".$movie->origin_country[$i] : $movie->origin_country[$i];
-                $movie->origin_country[$i] = locale_get_display_region($code);
-              }
           }
-
           //dd($result->results);
           
-        return view('film.info', ['movie' => $film, "result" => $movie, 'result_size' => $result->total_results]);
+        return view('film.info', ['movie' => $film, "result" => $movie, 'result_size' => $result->total_results, "films" => $result]);
     }
 
     /**

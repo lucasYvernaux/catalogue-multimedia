@@ -1,17 +1,8 @@
 echo -e "************  composer dump-autoload  ************"
 composer dump-autoload
-echo -e "**************************************************"
-echo -e "***************  composer install  ***************"
+echo -e "***************************************************"
+echo -e "***************  Composer install  ****************"
 composer install
-echo -e "**************************************************"
-echo -e "***********  php artisan cache:clear  ***********"
-php artisan cache:clear
-echo -e "**************************************************"
-echo -e "**********  php artisan key:generate **************"
-php artisan key:generate --force
-echo -e "****************************************************"
-echo -e "********    php artisan clear-compiled    ********"
-php artisan clear-compiled
 echo -e "***************************************************"
 echo -e "**********  php artisan migrate --seed  ***********"
 php artisan migrate --seed --force

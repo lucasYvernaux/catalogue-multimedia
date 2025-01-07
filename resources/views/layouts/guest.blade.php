@@ -14,7 +14,7 @@
     <link rel="icon" type="image/png" href="{{ asset('logo-cercle-portfolio.png') }}" />
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/sass/app.scss'])
 </head>
 
 <body class="font-sans text-gray-900 antialiased">

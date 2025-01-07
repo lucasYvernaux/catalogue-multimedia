@@ -18,6 +18,7 @@ RUN apk add nodejs npm
 
 ENV WEB_DOCUMENT_ROOT /app/public
 ENV APP_ENV production
+EXPOSE 5173
 WORKDIR /app
 COPY . .
 
@@ -38,7 +39,8 @@ RUN php artisan route:cache
 RUN php artisan view:cache
 
 # Compilation des assets de Breeze (ou de votre site)
-RUN npm install
-RUN npm run build
+RUN npm install yarn -g
+RUN yarn
+RUN yarn build
 
 RUN chown -R application:application .
